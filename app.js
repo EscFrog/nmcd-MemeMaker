@@ -1,6 +1,8 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
+let currentPos = { xPos: null, yPos: null };
+
 canvas.width = 800;
 canvas.height = 800;
 
@@ -19,12 +21,20 @@ const colors = [
 ];
 
 function drawLine(event) {
+  if (currentPos.xPos === null || currentPos.yPos === null) {
+    currentPos.xPos = event.offsetX;
+    currentPos.yPos = event.offsetY;
+  }
+
   ctx.beginPath();
-  ctx.moveTo(0, 0);
+  ctx.moveTo(currentPos.xPos, currentPos.yPos);
   const color = colors[Math.floor(Math.random() * colors.length)];
   ctx.strokeStyle = color;
   ctx.lineTo(event.offsetX, event.offsetY);
   ctx.stroke();
+
+  currentPos.xPos = event.offsetX;
+  currentPos.yPos = event.offsetY;
 }
 
 canvas.addEventListener("mousemove", drawLine);
