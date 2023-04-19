@@ -24,6 +24,7 @@ function drawLine(event) {
   if (currentPos.xPos === null || currentPos.yPos === null) {
     currentPos.xPos = event.offsetX;
     currentPos.yPos = event.offsetY;
+    return;
   }
 
   ctx.beginPath();
