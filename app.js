@@ -1,3 +1,4 @@
+const modeBtn = document.getElementById("mode-btn");
 // forEach 구문은 자바스크립트 배열에만 쓸 수 있다. 그런데
 // 그런데 getElementsByClassName() 펑션이 리턴하는 것은 것은 HTML Collection이지 배열이 아니다.
 // 그래서 Array.from() 펑션을 이용해 배열로 만들어줘야 함.
@@ -13,6 +14,7 @@ canvas.height = 800;
 ctx.lineWidth = lineThickness.value;
 
 let isPainting = false;
+let isFilling = false;
 
 function changeColor(newColor) {
   ctx.strokeStyle = newColor;
@@ -29,8 +31,12 @@ function onMove(event) {
 }
 
 function startPainting() {
-  isPainting = true;
   ctx.beginPath();
+  if (isFilling) {
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  } else {
+    isPainting = true;
+  }
 }
 
 function canclePainting() {
@@ -51,6 +57,17 @@ function onColorOptionPick(event) {
   colorPicker.value = newColor;
 }
 
+function onModeClick() {
+  if (isFilling) {
+    isFilling = false;
+    modeBtn.innerText = "Fill";
+  } else {
+    isFilling = true;
+    modeBtn.innerText = "Draw";
+    console.log(isFilling);
+  }
+}
+
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", canclePainting);
@@ -62,3 +79,5 @@ colorPicker.addEventListener("change", colorPickerChange);
 colorOption.forEach((color) =>
   color.addEventListener("click", onColorOptionPick)
 );
+
+modeBtn.addEventListener("click", onModeClick);
