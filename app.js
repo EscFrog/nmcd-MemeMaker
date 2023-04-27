@@ -1,3 +1,4 @@
+const textInput = document.getElementById("textInput");
 const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
 const clearBtn = document.getElementById("clear-btn");
@@ -16,8 +17,8 @@ const CANVAS_HEIGHT = 800;
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
-
 ctx.lineWidth = lineThickness.value;
+ctx.lineCap = "round";
 
 let isDrawing = false;
 let isFilling = false;
@@ -95,6 +96,18 @@ function onFileChange(event) {
   };
 }
 
+function onDoubleClick(event) {
+  ctx.save();
+  const text = textInput.value;
+  if (text !== "") {
+    ctx.lineWidth = 1;
+    ctx.font = "48px serif";
+    ctx.fillText(text, event.offsetX, event.offsetY);
+    ctx.restore();
+  }
+}
+
+canvas.addEventListener("dblclick", onDoubleClick);
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", canclePainting);
