@@ -1,3 +1,4 @@
+const saveBtn = document.getElementById("saveBtn");
 const textInput = document.getElementById("textInput");
 const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
@@ -71,7 +72,6 @@ function onModeClick() {
   } else {
     isFilling = true;
     modeBtn.innerText = "Draw";
-    console.log(isFilling);
   }
 }
 
@@ -107,6 +107,14 @@ function onDoubleClick(event) {
   }
 }
 
+function onSaveClick() {
+  const url = canvas.toDataURL(); // 캔버스에 있는 그림의 URL을 생성한다.
+  const a = document.createElement("a"); // 앵커를 도큐먼트에 추가한다.
+  a.href = url; // 앵커에 캔버스 url을 연결해준다.
+  a.download = "myDrawing.png"; // 앵커의 다운로드 속성을 추가한다.
+  a.click(); // 앵커를 강제로 클릭한다. 앵커는 실제로 웹페이지에 표시되지 않지만 가상의 앵커를 클릭하는 셈이다.
+}
+
 canvas.addEventListener("dblclick", onDoubleClick);
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
@@ -123,3 +131,4 @@ modeBtn.addEventListener("click", onModeClick);
 clearBtn.addEventListener("click", onClearClick);
 eraserBtn.addEventListener("click", onEraseClick);
 fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
